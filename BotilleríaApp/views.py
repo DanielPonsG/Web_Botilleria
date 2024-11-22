@@ -1,12 +1,13 @@
 from django.shortcuts import render
-
+from BotilleríaApp.models import Botellas
 # Create your views here.
 def Index(request):
     return render(request,'index.html')
 
 
 def Productos(request):
-    return render(request,'product.html')
+    producto = Botellas.objects.all()
+    return render(request,'product.html',{'producto':producto})
 
 
 def Ingresar(request):
