@@ -27,11 +27,18 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-6 d-flex align-items-center">
-						<p class="mb-0 phone pl-md-2">
-							<a href="#" class="mr-2"><span class="fa fa-phone mr-1"></span> +00 1234 567</a> 
-							<a href="#"><span class="fa fa-paper-plane mr-1"></span> youremail@email.com</a>
-						</p>
-					</div>
+						<!-- Mostrar el inicio Sesion -->
+						 {% if user.is_authenticated %}
+							<p class="mb-0 phone pl-md-2">
+								<a href="#" class="mr-2"><span class="fa fa-phone mr-1"></span>Hola, {{ user.username }}</a> 
+							</p>
+							<form method="POST" action="{% url 'logout' %}">
+								{% csrf_token %}
+								<button type="submit" class="btn btn-link">Cerrar Sesión</button>
+							</form>
+						{% endif %}
+						<!-- -->
+						</div>
 					<div class="col-md-6 d-flex justify-content-md-end">
 						<div class="social-media mr-4">
 			    		<p class="mb-0 d-flex">
@@ -42,7 +49,10 @@
 			    		</p>
 		        </div>
 		        <div class="reg">
-		        	<p class="mb-0"><a href="/admin">Iniciar Sesión</a></p>
+		        	<p class="mb-0 px-3"><a href="{% url 'login'%}">Iniciar Sesión Usuario</a></p>
+		        </div>
+				<div class="reg">
+		        	<p class="mb-0 px-3"><a href="/admin">Iniciar Sesión Admin</a></p>
 		        </div>
 					</div>
 				</div>
@@ -83,7 +93,7 @@
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav ml-auto">
 	          <li class="nav-item"><a href="{% url 'Inicio' %}" class="nav-link">Inicio</a></li>
-	          <li class="nav-item"><a href="{% url 'Productos' %}" class="nav-link">Productos</a></li>
+	          <li class="nav-item"><a href="{% url 'productos' %}" class="nav-link">Productos</a></li>
 
             </li>
 	        </ul>
