@@ -1,303 +1,134 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="es">
-  <head>
-    <title>MC Botillería</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,700;0,800;1,200;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+{% block content %}
 
-    <link rel="stylesheet" href="{% static 'https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'%}">
+<body>
+	<section class="hero-wrap hero-wrap-2" style="background-image: url('/static/images/bg_2.jpg');"
+		data-stellar-background-ratio="0.5">
+		<div class="overlay"></div>
+		<div class="container">
+			<div class="row no-gutters slider-text align-items-end justify-content-center">
+				<div class="col-md-9 ftco-animate mb-5 text-center">
+					<p class="breadcrumbs mb-0"><span class="mr-2"><a href="{% url 'Inicio' %}">Inicio <i
+									class="fa fa-chevron-right"></i></a></span></p>
+					<h1 class="mb-4">Los <span>Mejores</span> Productos <span>Para</span> Ti.</h1>
+				</div>
+			</div>
+		</div>
+	</section>
 
-    <link rel="stylesheet" href="{% static 'css/animate.css'%}">
-    
-    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css'%}">
-    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css'%}">
-    <link rel="stylesheet" href="{% static 'css/magnific-popup.css'%}">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css">
-    
-    <link rel="stylesheet" href="{% static 'css/flaticon.css'%}">
-    <link rel="stylesheet" href="{% static 'css/style.css'%}">
-  </head>
-  <body>
-
-  	<div class="wrap">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-6 d-flex align-items-center">
-						<!-- Mostrar el inicio Sesion -->
-						 {% if user.is_authenticated %}
-							<p class="mb-0 phone pl-md-2">
-								<a href="#" class="mr-2"><span class="fa fa-phone mr-1"></span>Hola, {{ user.username }}</a> 
-							</p>
-							<form method="POST" action="{% url 'logout' %}">
-								{% csrf_token %}
-								<button type="submit" class="btn btn-link">Cerrar Sesión</button>
-							</form>
-						{% endif %}
-						<!-- -->
+	<section class="ftco-section" style="background-color: white;">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-9">
+					<div class="row mb-4">
+						<div class="col-md-12 d-flex justify-content-between align-items-center">
+							<h4 class="product-select">Selecciona tu Producto</h4>
+							<select class="selectpicker" multiple>
+								<option>Brandy</option>
+								<option>Gin</option>
+								<option>Rum</option>
+								<option>Tequila</option>
+								<option>Vodka</option>
+								<option>Whiskey</option>
+							</select>
 						</div>
-					<div class="col-md-6 d-flex justify-content-md-end">
-						<div class="social-media mr-4">
-			    		<p class="mb-0 d-flex">
-			    			<a href="#" class="d-flex align-items-center justify-content-center"><span class="fa fa-facebook"><i class="sr-only">Facebook</i></span></a>
-			    			<a href="#" class="d-flex align-items-center justify-content-center"><span class="fa fa-twitter"><i class="sr-only">Twitter</i></span></a>
-			    			<a href="#" class="d-flex align-items-center justify-content-center"><span class="fa fa-instagram"><i class="sr-only">Instagram</i></span></a>
-			    			<a href="#" class="d-flex align-items-center justify-content-center"><span class="fa fa-dribbble"><i class="sr-only">Dribbble</i></span></a>
-			    		</p>
-		        </div>
-		        <div class="reg">
-		        	<p class="mb-0 px-3"><a href="{% url 'login'%}">Iniciar Sesión Usuario</a></p>
-		        </div>
-				<div class="reg">
-		        	<p class="mb-0 px-3"><a href="/admin">Iniciar Sesión Admin</a></p>
-		        </div>
+					</div>
+					{% if producto %} <!-- Comprobar si Existe "Producto" -->
+					{% for n in producto %} <!-- Recorrer Productos de la BD y mostrarlos-->
+					<div class="row d-flex flex-wrap">
+						<div class="col-md-12 d-flex">
+							<div class="product ftco-animate d-flex flex-row align-items-center">
+								<div class="img d-flex align-items-center justify-content-center"
+									style="background-image: url(/static/images/prod-1.jpg); width: 150px; height: 150px;">
+									<div class="desc">
+										<p class="meta-prod d-flex">
+											<a href="#" class="d-flex align-items-center justify-content-center"><span
+													class="flaticon-heart"></span></a>
+											<a href="#" class="d-flex align-items-center justify-content-center"><span
+													class="flaticon-shopping-bag"></span></a>
+										</p>
+									</div>
+								</div>
+								<div class="text ml-3">
+									<span class="sale">Oferta</span>
+									<span class="category">{{n.descripcion}}</span>
+									<h2>{{n.nombre}}</h2>
+									<p class="mb-0"><span class="price price-sale">$ 50.000</span> <span class="price">$
+											{{n.precio}}</span></p>
+								</div>
+							</div>
+						</div>
+					</div>
+					{% endfor %} <!-- Término de Recorrido -->
+					{% else %} <!-- En caso de que no haya Productos -->
+					<h2>Pronto Agregaremos Más</h2>
+					{% endif %} <!-- -->
+					<div class="row mt-5">
+						<div class="col text-center">
+							<div class="block-27">
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-3">
+					<div class="sidebar-box ftco-animate">
+						<div class="categories">
+							<h3>Tipos de Producto</h3>
+							<ul style="text-align: center; list-style: none; padding: 0;">
+								<li>Coñac <span class="fa fa-chevron-right"></span></li>
+								<li>Ginebra <span class="fa fa-chevron-right"></span></li>
+								<li>Ron <span class="fa fa-chevron-right"></span></li>
+								<li>Tequila <span class="fa fa-chevron-right"></span></li>
+								<li>Vodka <span class="fa fa-chevron-right"></span></li>
+								<li>Whisky <span class="fa fa-chevron-right"></span></li>
+							</ul>
+
+						</div>
+					</div>
+
+					<div class="sidebar-box ftco-animate">
+						<h3>Recent Blog</h3>
+						<div class="block-21 mb-4 d-flex">
+							<a class="blog-img mr-4" style="background-image: url(/static/images/image_1.jpg);"></a>
+							<div class="text">
+								<h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about the
+										blind texts</a></h3>
+								<div class="meta">
+									<div><a href="#"><span class="fa fa-calendar"></span> Apr. 18, 2020</a></div>
+									<div><a href="#"><span class="fa fa-comment"></span> 19</a></div>
+								</div>
+							</div>
+						</div>
+						<div class="block-21 mb-4 d-flex">
+							<a class="blog-img mr-4" style="background-image: url(/static/images/image_2.jpg);"></a>
+							<div class="text">
+								<h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about the
+										blind texts</a></h3>
+								<div class="meta">
+									<div><a href="#"><span class="fa fa-calendar"></span> Apr. 18, 2020</a></div>
+									<div><a href="#"><span class="fa fa-comment"></span> 19</a></div>
+								</div>
+							</div>
+						</div>
+						<div class="block-21 mb-4 d-flex">
+							<a class="blog-img mr-4" style="background-image: url(/static/images/image_3.jpg);"></a>
+							<div class="text">
+								<h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about the
+										blind texts</a></h3>
+								<div class="meta">
+									<div><a href="#"><span class="fa fa-calendar"></span> Apr. 18, 2020</a></div>
+									<div><a href="#"><span class="fa fa-comment"></span> 19</a></div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-    
-	  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
-	    <div class="container">
-			<a class="navbar-brand" href="index.html">Mc <span>Botillería</span></a>
-			<div class="order-lg-last btn-group">
-          <a href="#" class="btn-cart dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          	<span class="flaticon-shopping-bag"></span>
-			  <div class="d-flex justify-content-center align-items-center"><small>3</small></div>
-
-          </a>
-		  <div class="dropdown-menu dropdown-menu-right">
-    <!-- Visualización del Carrito -->
-			<div class="dropdown-item d-flex align-items-start" href="#">
-				<div class="img" style="background-image: url(/static/images/prod-1.jpg);"></div>
-				<div class="text pl-3">
-					<h4>Bacardi 151</h4>
-					<p class="mb-0"><a href="#" class="price">$25.99</a><span class="quantity ml-3">Quantity: 01</span></p>
-				</div>
-			</div>
-    <!-- Término del Carrito -->
-			
-			<a class="dropdown-item text-center btn-link d-block w-100" href="cart.html">
-				Ir a Pagar
-				<span class="ion-ios-arrow-round-forward"></span>
-			</a>
-		  </div>
-        </div>
-
-	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-	        <span class="oi oi-menu"></span> Menu
-	      </button>
-
-	      <div class="collapse navbar-collapse" id="ftco-nav">
-	        <ul class="navbar-nav ml-auto">
-	          <li class="nav-item"><a href="{% url 'Inicio' %}" class="nav-link">Inicio</a></li>
-	          <li class="nav-item"><a href="{% url 'productos' %}" class="nav-link">Productos</a></li>
-
-            </li>
-	        </ul>
-	      </div>
-	    </div>
-	  </nav>
-    <!-- END nav -->
-    
-    <section class="hero-wrap hero-wrap-2" style="background-image: url('/static/images/bg_2.jpg');" data-stellar-background-ratio="0.5">
-      <div class="overlay"></div>
-      <div class="container">
-        <div class="row no-gutters slider-text align-items-end justify-content-center">
-          <div class="col-md-9 ftco-animate mb-5 text-center">
-          	<p class="breadcrumbs mb-0"><span class="mr-2"><a href="{% url 'Inicio' %}">Inicio <i class="fa fa-chevron-right"></i></a></span></p>
-			  <h1 class="mb-4">Los <span>Mejores</span> Productos <span>Para</span> Ti.</h1>
-			</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="ftco-section">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-9">
-						<div class="row mb-4">
-							<div class="col-md-12 d-flex justify-content-between align-items-center">
-								<h4 class="product-select">Selecciona tu Producto</h4>
-								<select class="selectpicker" multiple>
-				          <option>Brandy</option>
-				          <option>Gin</option>
-				          <option>Rum</option>
-				          <option>Tequila</option>
-				          <option>Vodka</option>
-				          <option>Whiskey</option>
-				        </select>
-							</div>
-						</div>
-						{% if producto %} <!-- Comprobar si Existe "Producto" -->
-						{% for n in producto %} <!-- Recorrer Productos de la BD y mostrarlos-->
-						<div class="row d-flex flex-wrap">
-							<div class="col-md-12 d-flex">
-								<div class="product ftco-animate d-flex flex-row align-items-center">
-									<div class="img d-flex align-items-center justify-content-center" style="background-image: url(/static/images/prod-1.jpg); width: 150px; height: 150px;">
-										<div class="desc">
-											<p class="meta-prod d-flex">
-												<a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-heart"></span></a>
-												<a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-shopping-bag"></span></a>
-											</p>
-										</div>
-									</div>
-									<div class="text ml-3">
-										<span class="sale">Oferta</span>
-										<span class="category">{{n.descripcion}}</span>
-										<h2>{{n.nombre}}</h2>
-										<p class="mb-0"><span class="price price-sale">$ 50.000</span> <span class="price">$ {{n.precio}}</span></p>
-									</div>
-								</div>
-							</div>
-						</div>
-						{% endfor %} <!-- Término de Recorrido -->
-						{% else %} <!-- En caso de que no haya Productos -->
-  						 <h2>Pronto Agregaremos Más</h2>
-						{% endif %} <!-- -->
-						<div class="row mt-5">
-		          <div class="col text-center">
-		            <div class="block-27">
-		            </div>
-		          </div>
-		        </div>
-					</div>
-
-					<div class="col-md-3">
-						<div class="sidebar-box ftco-animate">
-              <div class="categories">
-                <h3>Tipos de Producto</h3>
-                <ul style="text-align: center; list-style: none; padding: 0;">
-					<li>Coñac <span class="fa fa-chevron-right"></span></li>
-					<li>Ginebra <span class="fa fa-chevron-right"></span></li>
-					<li>Ron <span class="fa fa-chevron-right"></span></li>
-					<li>Tequila <span class="fa fa-chevron-right"></span></li>
-					<li>Vodka <span class="fa fa-chevron-right"></span></li>
-					<li>Whisky <span class="fa fa-chevron-right"></span></li>
-				</ul>
-				
-              </div>
-            </div>
-
-            <div class="sidebar-box ftco-animate">
-              <h3>Recent Blog</h3>
-              <div class="block-21 mb-4 d-flex">
-                <a class="blog-img mr-4" style="background-image: url(/static/images/image_1.jpg);"></a>
-                <div class="text">
-                  <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about the blind texts</a></h3>
-                  <div class="meta">
-                    <div><a href="#"><span class="fa fa-calendar"></span> Apr. 18, 2020</a></div>
-                    <div><a href="#"><span class="fa fa-comment"></span> 19</a></div>
-                  </div>
-                </div>
-              </div>
-              <div class="block-21 mb-4 d-flex">
-                <a class="blog-img mr-4" style="background-image: url(/static/images/image_2.jpg);"></a>
-                <div class="text">
-                  <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about the blind texts</a></h3>
-                  <div class="meta">
-                    <div><a href="#"><span class="fa fa-calendar"></span> Apr. 18, 2020</a></div>
-                    <div><a href="#"><span class="fa fa-comment"></span> 19</a></div>
-                  </div>
-                </div>
-              </div>
-              <div class="block-21 mb-4 d-flex">
-                <a class="blog-img mr-4" style="background-image: url(/static/images/image_3.jpg);"></a>
-                <div class="text">
-                  <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about the blind texts</a></h3>
-                  <div class="meta">
-                    <div><a href="#"><span class="fa fa-calendar"></span> Apr. 18, 2020</a></div>
-                    <div><a href="#"><span class="fa fa-comment"></span> 19</a></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-					</div>
-				</div>
-			</div>
-		</section>
-
-    <footer class="ftco-footer">
-      <div class="container">
-        <div class="row mb-5">
-          <div class="col-sm-12 col-md">
-            <div class="ftco-footer-widget mb-4">
-              <h2 class="ftco-heading-2 logo"><a href="#">Liquor <span>Store</span></a></h2>
-              <p>Far far away, behind the word mountains, far from the countries.</p>
-              <ul class="ftco-footer-social list-unstyled mt-2">
-                <li class="ftco-animate"><a href="#"><span class="fa fa-twitter"></span></a></li>
-                <li class="ftco-animate"><a href="#"><span class="fa fa-facebook"></span></a></li>
-                <li class="ftco-animate"><a href="#"><span class="fa fa-instagram"></span></a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-sm-12 col-md">
-            <div class="ftco-footer-widget mb-4 ml-md-4">
-              <h2 class="ftco-heading-2">My Accounts</h2>
-              <ul class="list-unstyled">
-                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>My Account</a></li>
-                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Register</a></li>
-                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Log In</a></li>
-                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>My Order</a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-sm-12 col-md">
-            <div class="ftco-footer-widget mb-4 ml-md-4">
-              <h2 class="ftco-heading-2">Information</h2>
-              <ul class="list-unstyled">
-                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>About us</a></li>
-                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Catalog</a></li>
-                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Contact us</a></li>
-                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Term &amp; Conditions</a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-sm-12 col-md">
-             <div class="ftco-footer-widget mb-4">
-              <h2 class="ftco-heading-2">Quick Link</h2>
-              <ul class="list-unstyled">
-                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>New User</a></li>
-                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Help Center</a></li>
-                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Report Spam</a></li>
-                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Faq's</a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-sm-12 col-md">
-            <div class="ftco-footer-widget mb-4">
-            	<h2 class="ftco-heading-2">Have a Questions?</h2>
-            	<div class="block-23 mb-3">
-	              <ul>
-	                <li><span class="icon fa fa-map marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
-	                <li><a href="#"><span class="icon fa fa-phone"></span><span class="text">+2 392 3929 210</span></a></li>
-	                <li><a href="#"><span class="icon fa fa-paper-plane pr-4"></span><span class="text">info@yourdomain.com</span></a></li>
-	              </ul>
-	            </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="container-fluid px-0 py-5 bg-black">
-      	<div class="container">
-      		<div class="row">
-	          <div class="col-md-12">
-		
-	            <p class="mb-0" style="color: rgba(255,255,255,.5);"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-	  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart color-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib.com</a>
-	  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
-	          </div>
-	        </div>
-      	</div>
-      </div>
-    </footer>
-    
-  
-
-
-
+	</section>
+	{% endblock %}
 	<script src="{% static 'js/jquery.min.js'%}"></script>
 	<script src="{% static 'js/jquery-migrate-3.0.1.min.js'%}"></script>
 	<script src="{% static 'js/popper.min.js'%}"></script>
@@ -309,9 +140,11 @@
 	<script src="{% static 'js/jquery.magnific-popup.min.js'%}"></script>
 	<script src="{% static 'js/jquery.animateNumber.min.js'%}"></script>
 	<script src="{% static 'js/scrollax.min.js'%}"></script>
-	<script src="{% static 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false'%}"></script>
+	<script
+		src="{% static 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false'%}"></script>
 	<script src="{% static 'js/google-map.js'%}"></script>
 	<script src="{% static 'js/main.js'%}"></script>
-	  
-  </body>
+
+</body>
+
 </html>
